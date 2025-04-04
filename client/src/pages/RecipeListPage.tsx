@@ -1,6 +1,9 @@
+import { RecipeList } from "../components/RecipeList"
+
 const RecipeListPage = () => {
   return (
     <>
+      <RecipeList />
     </>
   )
 }
