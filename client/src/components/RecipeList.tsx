@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect } from 'react'
 import RecipeCard from './RecipeCard'
-import { RecipeShort, RecipeShortListSchema } from "../schema/recipeSchema"
-import { fetchRecipes } from "../clients/recipesClient"
+import { RecipeShort, RecipeShortListSchema } from '../schema/recipeSchema'
+import { fetchRecipes } from '../clients/recipesClient'
 
 export function RecipeList() {
   const [recipes, setRecipes] = useState<RecipeShort[]>([])
@@ -13,19 +13,20 @@ export function RecipeList() {
       try {
         setLoading(true)
 
-        const data = await fetchRecipes();
+        const data = await fetchRecipes()
 
         const validationResult = RecipeShortListSchema.safeParse(data)
 
         if (!validationResult.success) {
-          setError("Invalid data received from server")
+          setError('Invalid data received from server')
           return
         }
 
         setRecipes(validationResult.data)
         setError(null)
       } catch (err) {
-        setError("Failed to fetch recipes")
+        console.error(err)
+        setError('Failed to fetch recipes')
       } finally {
         setLoading(false)
       }
@@ -38,7 +39,10 @@ export function RecipeList() {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {[...Array(6)].map((_, i) => (
-          <div key={i} className="h-64 bg-gray-200 rounded-md animate-pulse"></div>
+          <div
+            key={i}
+            className="h-64 bg-gray-200 rounded-md animate-pulse"
+          ></div>
         ))}
       </div>
     )
@@ -55,9 +59,8 @@ export function RecipeList() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {recipes.map((recipe, i) => (
-        <RecipeCard recipe={recipe} key={i}/>
+        <RecipeCard recipe={recipe} key={i} />
       ))}
     </div>
   )
 }
-

@@ -1,5 +1,5 @@
-import { Link } from "wouter"
-import { RecipeShort } from "../schema/recipeSchema"
+import { Link } from 'wouter'
+import { RecipeShort } from '../schema/recipeSchema'
 
 interface RecipeCardProps {
   recipe: RecipeShort

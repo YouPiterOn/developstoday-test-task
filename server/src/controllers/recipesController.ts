@@ -14,12 +14,12 @@ export const getRecipes = async (req: Request, res: Response) => {
 
     const data = await fetchRecipes(filters)
 
-    if(!data.meals) {
+    if (!data.meals) {
       res.status(404).json({ message: 'Recipes not found' })
       return
     }
 
-    const recipes = data.meals.map(parseRecipeShort);
+    const recipes = data.meals.map(parseRecipeShort)
 
     res.json(recipes)
   } catch (error) {
@@ -39,12 +39,12 @@ export const getRecipeById = async (req: Request, res: Response) => {
 
     const data = await fetchRecipeById(id)
 
-    if(!data.meals || !data.meals[0]) {
+    if (!data.meals || !data.meals[0]) {
       res.status(404).json({ message: 'Recipe not found' })
       return
     }
 
-    const recipe = parseRecipe(data.meals[0]);
+    const recipe = parseRecipe(data.meals[0])
 
     res.json(recipe)
   } catch (error) {

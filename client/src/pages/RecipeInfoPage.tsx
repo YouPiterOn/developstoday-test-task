@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react"
-import { fetchRecipeById } from "../clients/recipesClient"
-import { useLocation, useParams } from "wouter";
-import { Recipe, RecipeSchema } from "../schema/recipeSchema";
+import { useEffect, useState } from 'react'
+import { fetchRecipeById } from '../clients/recipesClient'
+import { useLocation, useParams } from 'wouter'
+import { Recipe, RecipeSchema } from '../schema/recipeSchema'
 
 const RecipeInfoPage = () => {
   const { id } = useParams<{ id: string }>()
-  const [_, navigate] = useLocation();
+  const [, navigate] = useLocation()
   const [recipe, setRecipe] = useState<Recipe | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -19,14 +19,15 @@ const RecipeInfoPage = () => {
         const validationResult = RecipeSchema.safeParse(recipeData)
 
         if (!validationResult.success) {
-          setError("Invalid data received from server")
+          setError('Invalid data received from server')
           return
         }
 
         setRecipe(validationResult.data)
         setError(null)
       } catch (err) {
-        setError("Failed to fetch recipe")
+        console.error(err)
+        setError('Failed to fetch recipe')
       } finally {
         setLoading(false)
       }
@@ -44,7 +45,7 @@ const RecipeInfoPage = () => {
   }
 
   if (error || !recipe) {
-    navigate("/404")
+    navigate('/404')
     return
   }
 
@@ -58,8 +59,12 @@ const RecipeInfoPage = () => {
           className="w-64 h-64 object-cover rounded-lg mb-4"
         />
         <div className="text-center">
-          <p><strong>Category:</strong> {recipe.category}</p>
-          <p><strong>Area:</strong> {recipe.area}</p>
+          <p>
+            <strong>Category:</strong> {recipe.category}
+          </p>
+          <p>
+            <strong>Area:</strong> {recipe.area}
+          </p>
         </div>
 
         <h2 className="text-2xl mt-6 mb-4">Instructions</h2>
@@ -67,7 +72,12 @@ const RecipeInfoPage = () => {
 
         {recipe.youtube && (
           <div className="mt-4">
-            <a href={recipe.youtube} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+            <a
+              href={recipe.youtube}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500"
+            >
               Watch Recipe Video
             </a>
           </div>
@@ -86,7 +96,12 @@ const RecipeInfoPage = () => {
 
         {recipe.source && (
           <div className="mt-4">
-            <a href={recipe.source} target="_blank" rel="noopener noreferrer" className="text-blue-500">
+            <a
+              href={recipe.source}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-500"
+            >
               Recipe Source
             </a>
           </div>
